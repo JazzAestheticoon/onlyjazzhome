@@ -55,15 +55,22 @@ const siteTitle = "OnlyJazz";
   }
 
   /* Header Image Style */
-  .hero {
+.hero {
     width: 100%;
-    height: 300px; /* Adjust header height here */
     overflow: hidden;
   }
+
   .hero-image {
     width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensures the image fills the space nicely */
+    height: auto; /* Lets the height be determined by the width */
+    aspect-ratio: 16 / 5; /* Makes it a wide 'cinematic' banner */
+    object-fit: cover;
+  }
+
+  @media (max-width: 600px) {
+    .hero-image {
+      aspect-ratio: 16 / 9; /* Makes it a bit taller/square on mobile if needed */
+    }
   }
 
   /* Main Container */
