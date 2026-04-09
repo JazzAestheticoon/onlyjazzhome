@@ -1,111 +1,131 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
-import { getCollection } from 'astro:content';
-import FormattedDate from '../../components/FormattedDate.astro';
-
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+// This is the frontmatter area. You can add variables or JavaScript here later!
+const siteTitle = "My Personal Hub";
 ---
 
-<!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									<img width={720} height={360} src={post.data.heroImage} alt="" />
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{siteTitle}</title>
+  </head>
+  <body>
+    <header class="hero">
+      <img src="/my-header-image.jpg" alt="My Custom Header Banner" class="hero-image" />
+    </header>
+
+    <main class="container">
+      <section class="bio">
+        <h1>Hi, I'm Jazz! 👋</h1>
+        <p>
+          Welcome to my corner of the web! I'm a [your hobby/profession] who loves [your interests]. 
+          This is my personal hub where you can find all the places I hang out online.
+        </p>
+      </section>
+
+      <section class="social-grid">
+        
+        <a href="https://instagram.com/yourusername" target="_blank" rel="noopener" class="social-card">
+          <img src="/ig-photo.jpg" alt="Instagram Link" />
+          <div class="card-label">Instagram</div>
+        </a>
+
+        <a href="https://furtrack.com/user/yourusername" target="_blank" rel="noopener" class="social-card">
+          <img src="/furtrack-photo.jpg" alt="Furtrack Link" />
+          <div class="card-label">Furtrack</div>
+        </a>
+
+        <a href="https://t.me/yourusername" target="_blank" rel="noopener" class="social-card">
+          <img src="/telegram-photo.jpg" alt="Telegram Link" />
+          <div class="card-label">Telegram</div>
+        </a>
+
+      </section>
+    </main>
+  </body>
 </html>
+
+<style>
+  /* Base Reset & Fonts */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: #1a1a1a;
+    color: #f4f4f4;
+    line-height: 1.6;
+  }
+
+  /* Header Image Style */
+  .hero {
+    width: 100%;
+    height: 300px; /* Adjust header height here */
+    overflow: hidden;
+  }
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image fills the space nicely */
+  }
+
+  /* Main Container */
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  /* Bio Section */
+  .bio {
+    text-align: center;
+    margin-bottom: 3rem;
+    background: #2a2a2a;
+    padding: 2rem;
+    border-radius: 12px;
+  }
+  .bio h1 { margin-bottom: 1rem; color: #ffffff; }
+
+  /* Social Links Grid */
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* Individual Social Card */
+  .social-card {
+    display: block;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+    background: #000;
+  }
+  .social-card:hover {
+    transform: translateY(-5px); /* Cute hover bounce effect */
+  }
+  .social-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+  }
+  .social-card:hover img {
+    opacity: 1;
+  }
+  
+  /* Text over the social photos */
+  .card-label {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    text-align: center;
+    padding: 0.75rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+</style>
